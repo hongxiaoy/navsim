@@ -1,0 +1,5 @@
+export NUPLAN_MAP_VERSION="nuplan-maps-v1.0"
+export NUPLAN_MAPS_ROOT="/mnt/vdb1/hongxiao.yu/data/navsim/maps"
+export NAVSIM_EXP_ROOT="/home/hongxiao.yu/AIGD/navsim/exp"
+export NAVSIM_DEVKIT_ROOT="/home/hongxiao.yu/AIGD/navsim"
+export OPENSCENE_DATA_ROOT="/mnt/vdb1/hongxiao.yu/data/navsim"
