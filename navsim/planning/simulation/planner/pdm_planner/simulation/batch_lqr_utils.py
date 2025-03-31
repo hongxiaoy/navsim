@@ -1,5 +1,5 @@
 from typing import Tuple
-
+import torch
 import numpy as np
 import numpy.typing as npt
 
@@ -121,7 +121,8 @@ def _fit_initial_velocity_and_acceleration_profile(
 
     # Compute regularized least squares solution.
     intermediate_solution = batch_matmul(
-        np.linalg.pinv(batch_matmul(A_T, A) + jerk_penalty * batch_matmul(R_T, R)), A_T
+        # np.linalg.pinv(batch_matmul(A_T, A) + jerk_penalty * batch_matmul(R_T, R)), A_T
+        torch.linalg.pinv(torch.tensor(batch_matmul(A_T, A) + jerk_penalty * batch_matmul(R_T, R))).numpy(), A_T
     )
     x = np.einsum("bij, bj -> bi", intermediate_solution, y)
 
@@ -176,7 +177,8 @@ def _fit_initial_curvature_and_curvature_rate_profile(
     # Compute regularized least squares solution.
     A_T = A.transpose(0, 2, 1)
 
-    intermediate = batch_matmul(np.linalg.pinv(batch_matmul(A_T, A) + Q), A_T)
+    # intermediate = batch_matmul(np.linalg.pinv(batch_matmul(A_T, A) + Q), A_T)
+    intermediate = batch_matmul(torch.linalg.pinv(torch.tensor(batch_matmul(A_T, A) + Q)).numpy(), A_T)
     x = np.einsum("bij,bj->bi", intermediate, y)
 
     # Extract profile from solution.
